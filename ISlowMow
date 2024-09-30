@@ -27,12 +27,12 @@ mainFrameCorner.CornerRadius = UDim.new(0, 10)
 local onButton = Instance.new("TextButton")
 local offButton = Instance.new("TextButton")
 
--- Function to create buttons with smooth corners and larger text
-local function createButton(name, position)
+-- Function to create buttons with smooth corners, square shape, and larger text
+local function createSquareButton(name, position)
     local button = Instance.new("TextButton")
     button.Parent = mainFrame
     button.Text = name
-    button.Size = UDim2.new(0, 90, 0, 50)
+    button.Size = UDim2.new(0, 50, 0, 50) -- Square size
     button.Position = position
     button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     button.TextScaled = true -- Make text larger
@@ -48,20 +48,22 @@ local function createButton(name, position)
 end
 
 -- Create Buttons
-onButton = createButton("On", UDim2.new(0, 10, 0, 10))
-offButton = createButton("Off", UDim2.new(0, 110, 0, 10))
+onButton = createSquareButton("On", UDim2.new(0, 10, 0, 10))
+offButton = createSquareButton("Off", UDim2.new(0, 70, 0, 10))
 
 -- Create Plus, Minus, Speed Display, and Status Label
-local plusButton = createButton("+", UDim2.new(0, 10, 0, 70))
-local minusButton = createButton("-", UDim2.new(0, 80, 0, 70))
+local plusButton = createSquareButton("+", UDim2.new(0, 130, 0, 10))
+local minusButton = createSquareButton("-", UDim2.new(0, 190, 0, 10))
+minusButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Set font color to black for minus button
+
 local speedDisplay = Instance.new("TextLabel")
 local statusIndicator = Instance.new("TextLabel")
 
 -- Speed Display Label
 speedDisplay.Parent = mainFrame
 speedDisplay.Text = tostring(slowSpeed)
-speedDisplay.Size = UDim2.new(0, 80, 0, 50)
-speedDisplay.Position = UDim2.new(0, 150, 0, 70)
+speedDisplay.Size = UDim2.new(0, 50, 0, 50)
+speedDisplay.Position = UDim2.new(0, 10, 0, 70)
 speedDisplay.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 speedDisplay.TextColor3 = Color3.fromRGB(255, 255, 255)
 speedDisplay.TextScaled = true
@@ -84,8 +86,8 @@ statusIndicatorCorner.Parent = statusIndicator
 statusIndicatorCorner.CornerRadius = UDim.new(0, 10)
 
 -- Create Minimize and Close buttons
-local minimizeButton = createButton("-", UDim2.new(0, 200, 0, 10))
-local closeButton = createButton("X", UDim2.new(0, 240, 0, 10))
+local minimizeButton = createSquareButton("-", UDim2.new(0, 250, 0, 10))
+local closeButton = createSquareButton("X", UDim2.new(0, 250, 0, 70))
 
 -- Function to adjust animation speed
 local function setSlowMotion(speed)
