@@ -12,8 +12,8 @@ screenGui.Parent = player:WaitForChild("PlayerGui")
 -- Create a Main Frame (black) to contain all the buttons and display
 local mainFrame = Instance.new("Frame")
 mainFrame.Parent = screenGui
-mainFrame.Size = UDim2.new(0, 300, 0, 450)  -- Adjusted height for a taller top bar
-mainFrame.Position = UDim2.new(0.5, -150, 0.5, -225)  -- Center the frame
+mainFrame.Size = UDim2.new(0, 300, 0, 300)  -- Adjusted to reduce the blank space
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -150)  -- Center the frame
 mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)  -- Black background
 mainFrame.BorderSizePixel = 0  -- No border for a smooth look
 mainFrame.Active = true -- Make it interactive
@@ -36,10 +36,10 @@ local speedDisplay = Instance.new("TextLabel")
 local statusIndicator = Instance.new("TextLabel") -- Status indicator
 
 -- Function to create buttons with smooth corners
-local function createButton(button, text, position)
+local function createButton(button, text, position, width)
     button.Parent = mainFrame
     button.Text = text
-    button.Size = UDim2.new(0, 100, 0, 50)
+    button.Size = UDim2.new(0, width or 100, 0, 50)
     button.Position = position
     button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
     button.TextScaled = true -- Make the text scale with button size
@@ -51,16 +51,16 @@ local function createButton(button, text, position)
 end
 
 -- Set Properties for GUI Elements
-createButton(onButton, "On", UDim2.new(0, 10, 0, 10)) -- Positioned higher
-createButton(offButton, "Off", UDim2.new(0, 120, 0, 10)) -- Positioned higher
-createButton(plusButton, "+", UDim2.new(0, 10, 0, 150))
-createButton(minusButton, "-", UDim2.new(0, 70, 0, 150))
+createButton(onButton, "On", UDim2.new(0, 10, 0, 10), 90) -- Moved "On" to the left
+createButton(offButton, "Off", UDim2.new(0, 110, 0, 10), 90) -- Moved "Off" farther apart
+createButton(plusButton, "+", UDim2.new(0, 10, 0, 100), 60) -- Moved "+" and adjusted width
+createButton(minusButton, "-", UDim2.new(0, 80, 0, 100), 60) -- Moved "-" and adjusted width
 
 -- Minimize Button
 minimizeButton.Parent = mainFrame
 minimizeButton.Text = "-" -- Minimize button
 minimizeButton.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
-minimizeButton.Position = UDim2.new(0, 230, 0, 10) -- Moved more to the right
+minimizeButton.Position = UDim2.new(0, 200, 0, 10) -- More to the right
 minimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
 minimizeButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text for visibility
 minimizeButton.TextScaled = true -- Make the text scale with button size
@@ -75,7 +75,7 @@ minimizeButtonCorner.CornerRadius = UDim.new(0, 10) -- Adjust corner radius
 closeButton.Parent = mainFrame
 closeButton.Text = "X" -- Close button
 closeButton.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
-closeButton.Position = UDim2.new(0, 270, 0, 10) -- Moved more to the right
+closeButton.Position = UDim2.new(0, 240, 0, 10) -- Moved to the right next to minimize button
 closeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
 closeButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text for visibility
 closeButton.TextScaled = true -- Make the text scale with button size
@@ -86,11 +86,11 @@ local closeButtonCorner = Instance.new("UICorner")
 closeButtonCorner.Parent = closeButton
 closeButtonCorner.CornerRadius = UDim.new(0, 10) -- Adjust corner radius
 
--- Speed Display
+-- Speed Display (moved more to the left)
 speedDisplay.Parent = mainFrame
 speedDisplay.Text = tostring(slowSpeed)
-speedDisplay.Size = UDim2.new(0, 100, 0, 50)
-speedDisplay.Position = UDim2.new(0, 130, 0, 150) -- Adjusted position
+speedDisplay.Size = UDim2.new(0, 80, 0, 50) -- Adjusted size
+speedDisplay.Position = UDim2.new(0, 150, 0, 100) -- Moved to fill the left space
 speedDisplay.BackgroundColor3 = Color3.fromRGB(20, 20, 20) -- Black background
 speedDisplay.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
 speedDisplay.TextScaled = true -- Make the text scale with button size
@@ -99,15 +99,15 @@ speedDisplay.TextScaled = true -- Make the text scale with button size
 statusIndicator.Parent = mainFrame
 statusIndicator.Text = "Status: Off"
 statusIndicator.Size = UDim2.new(0, 210, 0, 50)
-statusIndicator.Position = UDim2.new(0, 10, 0, 260)  -- 1 cm down from buttons
+statusIndicator.Position = UDim2.new(0, 10, 0, 160)  -- Moved up to fill the space
 statusIndicator.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Start with Red (Off)
 statusIndicator.TextColor3 = Color3.fromRGB(255, 255, 255)
 statusIndicator.TextScaled = true -- Make the text scale with button size
 
 -- Add smooth corners to the status indicator
-local statusIndicatorCorner = Instance.new("UICorner")
-statusIndicatorCorner.Parent = statusIndicator
-statusIndicatorCorner.CornerRadius = UDim.new(0, 10) -- Smooth corner for status
+local statusCorner = Instance.new("UICorner")
+statusCorner.Parent = statusIndicator
+statusCorner.CornerRadius = UDim.new(0, 10) -- Rounded corners for status indicator
 
 -- Function to set animation speed and update status
 local function setSlowMotion(speed)
@@ -140,20 +140,10 @@ closeButton.MouseButton1Click:Connect(function()
 end)
 
 minimizeButton.MouseButton1Click:Connect(function()
-    if mainFrame.Size == UDim2.new(0, 300, 0, 450) then
+    if mainFrame.Size == UDim2.new(0, 300, 0, 300) then
         mainFrame.Size = UDim2.new(0, 300, 0, 50) -- Minimize the frame
-        -- Hide all buttons except On/Off, Minimize, and Close
-        plusButton.Visible = false
-        minusButton.Visible = false
-        speedDisplay.Visible = false
-        statusIndicator.Visible = false
     else
-        mainFrame.Size = UDim2.new(0, 300, 0, 450) -- Restore the frame
-        -- Restore visibility of the hidden buttons
-        plusButton.Visible = true
-        minusButton.Visible = true
-        speedDisplay.Visible = true
-        statusIndicator.Visible = true
+        mainFrame.Size = UDim2.new(0, 300, 0, 300) -- Restore the frame
     end
 end)
 
