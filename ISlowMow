@@ -37,6 +37,7 @@ local function createButton(name, position)
     button.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     button.TextScaled = true -- Make text larger
     button.Font = Enum.Font.SourceSansBold -- Set font style
+    button.TextSize = 24 -- Set a larger text size
 
     -- Add smooth corners to the button
     local buttonCorner = Instance.new("UICorner")
@@ -64,6 +65,7 @@ speedDisplay.Position = UDim2.new(0, 150, 0, 70)
 speedDisplay.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 speedDisplay.TextColor3 = Color3.fromRGB(255, 255, 255)
 speedDisplay.TextScaled = true
+speedDisplay.TextSize = 24 -- Set a larger text size
 local speedDisplayCorner = Instance.new("UICorner")
 speedDisplayCorner.Parent = speedDisplay
 speedDisplayCorner.CornerRadius = UDim.new(0, 10)
@@ -76,6 +78,7 @@ statusIndicator.Position = UDim2.new(0, 10, 0, 130)
 statusIndicator.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 statusIndicator.TextColor3 = Color3.fromRGB(255, 255, 255)
 statusIndicator.TextScaled = true
+statusIndicator.TextSize = 24 -- Set a larger text size
 local statusIndicatorCorner = Instance.new("UICorner")
 statusIndicatorCorner.Parent = statusIndicator
 statusIndicatorCorner.CornerRadius = UDim.new(0, 10)
