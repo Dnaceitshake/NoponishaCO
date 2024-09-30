@@ -1,0 +1,155 @@
+-- Hi guys me cool
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local slowSpeed = 0.4 -- Starting slow-motion speed
+local maxSpeed = 3 -- Maximum speed increased
+
+-- Create Gui for cool pinoy
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+-- Create a Main Frame (black) to contain all the buttons and display
+local mainFrame = Instance.new("Frame")
+mainFrame.Parent = screenGui
+mainFrame.Size = UDim2.new(0, 300, 0, 400)  -- Adjusted height for a stretched top bar
+mainFrame.Position = UDim2.new(0.5, -150, 0.5, -200)  -- Center the frame
+mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)  -- Black background
+mainFrame.BorderSizePixel = 0  -- No border for a smooth look
+mainFrame.Active = true -- Make it interactive
+mainFrame.Draggable = true -- Enable dragging
+mainFrame.BackgroundTransparency = 0.1 -- Slight transparency for a smoother look
+
+-- Add smooth corners to the main frame
+local mainFrameCorner = Instance.new("UICorner")
+mainFrameCorner.Parent = mainFrame
+mainFrameCorner.CornerRadius = UDim.new(0, 10) -- Adjust corner radius
+
+-- Create Buttons and Text Display within the black box
+local onButton = Instance.new("TextButton")
+local offButton = Instance.new("TextButton")
+local closeButton = Instance.new("TextButton") -- Close button (X)
+local minimizeButton = Instance.new("TextButton") -- Minimize button (-)
+local plusButton = Instance.new("TextButton")
+local minusButton = Instance.new("TextButton")
+local speedDisplay = Instance.new("TextLabel")
+local statusIndicator = Instance.new("TextLabel") -- Status indicator
+
+-- Function to create buttons with smooth corners
+local function createButton(button, text, position)
+    button.Parent = mainFrame
+    button.Text = text
+    button.Size = UDim2.new(0, 100, 0, 50)
+    button.Position = position
+    button.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
+    button.TextScaled = true -- Make the text scale with button size
+
+    -- Add smooth corners to the button
+    local buttonCorner = Instance.new("UICorner")
+    buttonCorner.Parent = button
+    buttonCorner.CornerRadius = UDim.new(0, 10) -- Adjust corner radius
+end
+
+-- Set Properties for GUI Elements
+createButton(onButton, "On", UDim2.new(0, 10, 0, 10))
+createButton(offButton, "Off", UDim2.new(0, 120, 0, 10))
+createButton(plusButton, "+", UDim2.new(0, 10, 0, 150))
+createButton(minusButton, "-", UDim2.new(0, 70, 0, 150))
+
+-- Minimize Button
+minimizeButton.Parent = mainFrame
+minimizeButton.Text = "-" -- Minimize button
+minimizeButton.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
+minimizeButton.Position = UDim2.new(0, 190, 0, 10) -- Position next to close button
+minimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
+minimizeButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text for visibility
+minimizeButton.TextScaled = true -- Make the text scale with button size
+minimizeButton.BackgroundTransparency = 0.5 -- Smooth corner appearance
+
+-- Add smooth corners to the minimize button
+local minimizeButtonCorner = Instance.new("UICorner")
+minimizeButtonCorner.Parent = minimizeButton
+minimizeButtonCorner.CornerRadius = UDim.new(0, 10) -- Adjust corner radius
+
+-- Close Button
+closeButton.Parent = mainFrame
+closeButton.Text = "X" -- Close button
+closeButton.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
+closeButton.Position = UDim2.new(0, 240, 0, 10)
+closeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
+closeButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text for visibility
+closeButton.TextScaled = true -- Make the text scale with button size
+closeButton.BackgroundTransparency = 0.5 -- Smooth corner appearance
+
+-- Add smooth corners to the close button
+local closeButtonCorner = Instance.new("UICorner")
+closeButtonCorner.Parent = closeButton
+closeButtonCorner.CornerRadius = UDim.new(0, 10) -- Adjust corner radius
+
+-- Speed Display
+speedDisplay.Parent = mainFrame
+speedDisplay.Text = tostring(slowSpeed)
+speedDisplay.Size = UDim2.new(0, 100, 0, 50)
+speedDisplay.Position = UDim2.new(0, 130, 0, 150) -- Adjusted position
+speedDisplay.BackgroundColor3 = Color3.fromRGB(20, 20, 20) -- Black background
+speedDisplay.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+speedDisplay.TextScaled = true -- Make the text scale with button size
+
+-- Create the Status Indicator inside the black box
+statusIndicator.Parent = mainFrame
+statusIndicator.Text = "Status: Off"
+statusIndicator.Size = UDim2.new(0, 210, 0, 50)
+statusIndicator.Position = UDim2.new(0, 10, 0, 210)  -- Below the buttons
+statusIndicator.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Start with Red (Off)
+statusIndicator.TextColor3 = Color3.fromRGB(255, 255, 255)
+statusIndicator.TextScaled = true -- Make the text scale with button size
+
+-- Function to set animation speed and update status
+local function setSlowMotion(speed)
+    for _, animTrack in pairs(humanoid:GetPlayingAnimationTracks()) do
+        animTrack:AdjustSpeed(speed)
+    end
+    speedDisplay.Text = string.format("%.1f", speed) -- Update the display
+
+    -- Update the status indicator
+    if speed == 1 then
+        statusIndicator.Text = "Status: Off"
+        statusIndicator.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Red
+    else
+        statusIndicator.Text = "Status: On"
+        statusIndicator.BackgroundColor3 = Color3.fromRGB(128, 0, 128) -- Purple
+    end
+end
+
+-- Button Functions
+onButton.MouseButton1Click:Connect(function()
+    setSlowMotion(slowSpeed) -- Apply the slow-motion effect
+end)
+
+offButton.MouseButton1Click:Connect(function()
+    setSlowMotion(1) -- Reset speed to normal
+end)
+
+closeButton.MouseButton1Click:Connect(function()
+    screenGui:Destroy() -- Close the GUI
+end)
+
+minimizeButton.MouseButton1Click:Connect(function()
+    if mainFrame.Size == UDim2.new(0, 300, 0, 400) then
+        mainFrame.Size = UDim2.new(0, 300, 0, 50) -- Minimize the frame
+    else
+        mainFrame.Size = UDim2.new(0, 300, 0, 400) -- Restore the frame
+    end
+end)
+
+plusButton.MouseButton1Click:Connect(function()
+    slowSpeed = slowSpeed + 0.1
+    if slowSpeed > maxSpeed then slowSpeed = maxSpeed end -- Max speed limit increased to 3
+    setSlowMotion(slowSpeed)
+end)
+
+minusButton.MouseButton1Click:Connect(function()
+    slowSpeed = slowSpeed - 0.1
+    if slowSpeed < 0.1 then slowSpeed = 0.1 end -- Minimum speed
+    setSlowMotion(slowSpeed)
+end)
