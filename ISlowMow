@@ -60,7 +60,7 @@ createButton(minusButton, "-", UDim2.new(0, 70, 0, 150))
 minimizeButton.Parent = mainFrame
 minimizeButton.Text = "-" -- Minimize button
 minimizeButton.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
-minimizeButton.Position = UDim2.new(0, 210, 0, 10) -- More to the right
+minimizeButton.Position = UDim2.new(0, 230, 0, 10) -- Moved more to the right
 minimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
 minimizeButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text for visibility
 minimizeButton.TextScaled = true -- Make the text scale with button size
@@ -75,7 +75,7 @@ minimizeButtonCorner.CornerRadius = UDim.new(0, 10) -- Adjust corner radius
 closeButton.Parent = mainFrame
 closeButton.Text = "X" -- Close button
 closeButton.Size = UDim2.new(0, 30, 0, 30) -- Smaller size
-closeButton.Position = UDim2.new(0, 260, 0, 10) -- More to the right
+closeButton.Position = UDim2.new(0, 270, 0, 10) -- Moved more to the right
 closeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255) -- White button
 closeButton.TextColor3 = Color3.fromRGB(0, 0, 0) -- Black text for visibility
 closeButton.TextScaled = true -- Make the text scale with button size
@@ -103,6 +103,11 @@ statusIndicator.Position = UDim2.new(0, 10, 0, 260)  -- 1 cm down from buttons
 statusIndicator.BackgroundColor3 = Color3.fromRGB(255, 0, 0) -- Start with Red (Off)
 statusIndicator.TextColor3 = Color3.fromRGB(255, 255, 255)
 statusIndicator.TextScaled = true -- Make the text scale with button size
+
+-- Add smooth corners to the status indicator
+local statusIndicatorCorner = Instance.new("UICorner")
+statusIndicatorCorner.Parent = statusIndicator
+statusIndicatorCorner.CornerRadius = UDim.new(0, 10) -- Smooth corner for status
 
 -- Function to set animation speed and update status
 local function setSlowMotion(speed)
